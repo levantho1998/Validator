@@ -76,7 +76,7 @@
         rules: [
           Validator.isRequired("#fullname", "vui lòng nhập tên của bạn"),
           Validator.isEmail("#email", " vui lòng nhập chính xác email"),
-          Validator.minLength("#password", 7),
+          Validator.minLength("#password", 6),
           Validator.isRequired("#password_confirmation"),
           Validator.isConfirm(
             "#password_confirmation",

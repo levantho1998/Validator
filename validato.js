@@ -1,4 +1,5 @@
 function Validator(options) {
+  // console.log("params", options);
   function getParent(element, selector) {
     while (element.parentElement) {
       if (element.parentElement.matches(selector)) {
@@ -10,6 +11,7 @@ function Validator(options) {
   var selectorRules = {};
   // hàm thực hiện validate
   function validate(inputElement, rule) {
+    // console.log("inputElement", inputElement, "rule", rule);
     var errorElement = getParent(inputElement, options.formGroup).querySelector(
       options.errorSelector
     );
@@ -17,7 +19,10 @@ function Validator(options) {
     // var errorMessage = rule.test(inputElement.value);
 
     // lấy ra các rule của selector
+    // console.log("selectorRules", selectorRules);
     var rules = selectorRules[rule.selector];
+    // console.log("rules", rules);
+
     // lặp qua từng rule và kiểm tra
     for (var i = 0; i < rules.length; i++) {
       errorMessage = rules[i](inputElement.value);
@@ -51,22 +56,29 @@ function Validator(options) {
         if (!isValid) {
           isFormValid = false;
         }
-        if (isFormValid) {
-          // if (typeof options.onSubmit === "function") {
-          //   var enableInputs = formElement.querySelectorAll("[name]");
-          //   var formValues = Array.from(enableInputs).reduce((values, input) => {
-          //     return (values[input.name] = input) && values;
-          //   }, {});
-          //   options.onSubmit();
-          // }
-          return options.onSubmit();
-        }
+
+        // if (isFormValid) {
+        //   if (typeof options.onSubmit === "function") {
+        //     var enableInputs = formElement.querySelectorAll("[name]");
+        //     var formValues = Array.from(enableInputs).reduce(
+        //       (values, input) => {
+        //         return (values[input.name] = input) && values;
+        //       },
+        //       {}
+        //     );
+        //   }
+        // }
       });
+      if (isFormValid) {
+        options.onSubmit();
+      }
     };
 
     // lặp qua mỗi rule  và láng nghe sự kiện
     options.rules.forEach(function (rule) {
+      // console.log("rulesssss", rule);
       // Lưu lại các rules cho mỗi input
+      // console.log("selectorRules[]", selectorRules[rule.selector]);
       if (Array.isArray(selectorRules[rule.selector])) {
         selectorRules[rule.selector].push(rule.test);
       } else {
