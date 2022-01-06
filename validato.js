@@ -8,23 +8,23 @@ function Validator(options) {
       element = element.parentElement;
     }
   }
-  var selectorRules = {};
+  let selectorRules = {};
   // hàm thực hiện validate
   function validate(inputElement, rule) {
     // console.log("inputElement", inputElement, "rule", rule);
-    var errorElement = getParent(inputElement, options.formGroup).querySelector(
+    let errorElement = getParent(inputElement, options.formGroup).querySelector(
       options.errorSelector
     );
-    var errorMessage;
-    // var errorMessage = rule.test(inputElement.value);
+    let errorMessage;
+    // let errorMessage = rule.test(inputElement.value);
 
     // lấy ra các rule của selector
     // console.log("selectorRules", selectorRules);
-    var rules = selectorRules[rule.selector];
+    let rules = selectorRules[rule.selector];
     // console.log("rules", rules);
 
     // lặp qua từng rule và kiểm tra
-    for (var i = 0; i < rules.length; i++) {
+    for (let i = 0; i < rules.length; i++) {
       errorMessage = rules[i](inputElement.value);
       if (errorMessage) break;
     }
@@ -40,18 +40,18 @@ function Validator(options) {
   }
 
   // lấy element của form cần validate
-  var formElement = document.querySelector(options.form);
+  let formElement = document.querySelector(options.form);
 
   if (formElement) {
     formElement.onsubmit = function (e) {
       e.preventDefault();
 
-      var isFormValid = true;
+      let isFormValid = true;
 
       // laặp qua từng rule và validat
       options.rules.forEach(function (rule) {
-        var inputElement = formElement.querySelector(rule.selector);
-        var isValid = validate(inputElement, rule);
+        let inputElement = formElement.querySelector(rule.selector);
+        let isValid = validate(inputElement, rule);
 
         if (!isValid) {
           isFormValid = false;
@@ -59,8 +59,8 @@ function Validator(options) {
 
         // if (isFormValid) {
         //   if (typeof options.onSubmit === "function") {
-        //     var enableInputs = formElement.querySelectorAll("[name]");
-        //     var formValues = Array.from(enableInputs).reduce(
+        //     let enableInputs = formElement.querySelectorAll("[name]");
+        //     let formValues = Array.from(enableInputs).reduce(
         //       (values, input) => {
         //         return (values[input.name] = input) && values;
         //       },
@@ -70,7 +70,7 @@ function Validator(options) {
         // }
       });
       if (isFormValid) {
-        options.onSubmit();
+        return options.onSubmit();
       }
     };
 
@@ -84,7 +84,7 @@ function Validator(options) {
       } else {
         selectorRules[rule.selector] = [rule.test];
       }
-      var inputElement = formElement.querySelector(rule.selector);
+      let inputElement = formElement.querySelector(rule.selector);
       // console.log(rule.selector);
       if (inputElement) {
         // xử lý blur ra ngoài
@@ -93,7 +93,7 @@ function Validator(options) {
         };
         // xư lý người dùng nhập vào
         inputElement.oninput = function () {
-          var errorElement = inputElement.parentElement.querySelector(
+          let errorElement = inputElement.parentElement.querySelector(
             options.errorSelector
           );
           errorElement.innerText = "";
