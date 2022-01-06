@@ -56,18 +56,7 @@ function Validator(options) {
         if (!isValid) {
           isFormValid = false;
         }
-
-        // if (isFormValid) {
-        //   if (typeof options.onSubmit === "function") {
-        //     let enableInputs = formElement.querySelectorAll("[name]");
-        //     let formValues = Array.from(enableInputs).reduce(
-        //       (values, input) => {
-        //         return (values[input.name] = input) && values;
-        //       },
-        //       {}
-        //     );
-        //   }
-        // }
+        //
       });
       if (isFormValid) {
         return options.onSubmit();
